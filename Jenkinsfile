@@ -27,20 +27,18 @@ pipeline {
                     }
                 }
             }
-            when {
-                env.VERSION 'minor'
-            }
-            steps {
-                script {
-                    incrementMinor()
+            if (env.VERSION == 'minor') {
+                steps {
+                    script {
+                        incrementMinor()
+                    }
                 }
             }
-            when {
-                env.VERSION 'major'
-            }
-            steps {
-                script {
-                    incrementMajor()
+            if (env.VERSION == 'major') {
+                steps {
+                    script {
+                        incrementMajor()
+                    }
                 }
             }
         }
