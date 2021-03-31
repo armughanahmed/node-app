@@ -19,7 +19,7 @@ pipeline {
 
     stages {
         stage('increment version') {
-            def packageJSON = readJSON file: 'package.json'
+            def packageJSON = readJSON file: './package.json'
             when {
                 expression {
                     env.VERSION == 'patch'
@@ -54,7 +54,7 @@ pipeline {
         }
 
         stage('build and push image') {
-            def packageJSON = readJSON file: 'package.json'
+            def packageJSON = readJSON file: './package.json'
             steps {
                 script {
                     buildImage "${packageJSON}"
