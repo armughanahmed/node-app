@@ -24,32 +24,35 @@ pipeline {
                 expression {
                     env.VERSION == 'patch'
                 }
-            steps {
-                script {
-                    incrementPatch()
-                }
             }
-            when {
-                expression {
-                    env.VERSION == 'minor'
+                steps {
+                    script {
+                        incrementPatch()
+                    }
                 }
-            }
-            steps {
-                script {
-                    incrementMinor()
+
+                when {
+                    expression {
+                        env.VERSION == 'minor'
+                    }
                 }
-            }
-            when {
-                expression {
-                    env.VERSION == 'major'
+                steps {
+                    script {
+                        incrementMinor()
+                    }
                 }
-            }
-            steps {
-                script {
-                    incrementMajor()
+                when {
+                    expression {
+                        env.VERSION == 'major'
+                    }
                 }
-            }
+                steps {
+                    script {
+                        incrementMajor()
+                    }
+                }
         }
+
         stage('build and push image') {
             steps {
                 script {
@@ -57,19 +60,19 @@ pipeline {
                 }
             }
         }
-        // stage('deploy') {
-        //     steps {
-        //         script {
-        //             deploy()
-        //         }
-        //     }
-        // }
-        // stage('commit version update') {
-        //     steps {
-        //         script {
-        //             commitUpdate()
-        //         }
-        //     }
-        // }
+    // stage('deploy') {
+    //     steps {
+    //         script {
+    //             deploy()
+    //         }
+    //     }
+    // }
+    // stage('commit version update') {
+    //     steps {
+    //         script {
+    //             commitUpdate()
+    //         }
+    //     }
+    // }
     }
 }
