@@ -19,42 +19,43 @@ pipeline {
 
     stages {
         stage('increment version') {
-            def packageJSON = readJSON file: './package.json'
-            when {
-                expression {
-                    env.VERSION == 'patch'
-                }
-            }
-                steps {
-                    script {
-                        incrementPatch()
-                    }
-                }
+            def packageJSON = readJSON file: 'package.json'
+            incrementPatch()
+            // when {
+            //     expression {
+            //         env.VERSION == 'patch'
+            //     }
+            // }
+            //     steps {
+            //         script {
+            //             incrementPatch()
+            //         }
+            //     }
 
-                when {
-                    expression {
-                        env.VERSION == 'minor'
-                    }
-                }
-                steps {
-                    script {
-                        incrementMinor()
-                    }
-                }
-                when {
-                    expression {
-                        env.VERSION == 'major'
-                    }
-                }
-                steps {
-                    script {
-                        incrementMajor()
-                    }
-                }
+            //     when {
+            //         expression {
+            //             env.VERSION == 'minor'
+            //         }
+            //     }
+            //     steps {
+            //         script {
+            //             incrementMinor()
+            //         }
+            //     }
+            //     when {
+            //         expression {
+            //             env.VERSION == 'major'
+            //         }
+            //     }
+            //     steps {
+            //         script {
+            //             incrementMajor()
+            //         }
+            //     }
         }
 
         stage('build and push image') {
-            def packageJSON = readJSON file: './package.json'
+            def packageJSON = readJSON file: 'package.json'
             steps {
                 script {
                     buildImage "${packageJSON}"
