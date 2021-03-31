@@ -20,12 +20,11 @@ pipeline {
     stages {
         def packageJSON = readJSON file: 'package.json'
         stage('increment version') {
-            when {
-                env.VERSION 'patch'
-            }
-            steps {
-                script {
-                    incrementPatch()
+            if (env.VERSION == 'patch') {
+                steps {
+                    script {
+                        incrementPatch()
+                    }
                 }
             }
             when {
@@ -52,19 +51,19 @@ pipeline {
                 }
             }
         }
-        // stage('deploy') {
-        //     steps {
-        //         script {
-        //             deploy()
-        //         }
-        //     }
-        // }
-        // stage('commit version update') {
-        //     steps {
-        //         script {
-        //             commitUpdate()
-        //         }
-        //     }
-        // }
+    // stage('deploy') {
+    //     steps {
+    //         script {
+    //             deploy()
+    //         }
+    //     }
+    // }
+    // stage('commit version update') {
+    //     steps {
+    //         script {
+    //             commitUpdate()
+    //         }
+    //     }
+    // }
     }
 }
