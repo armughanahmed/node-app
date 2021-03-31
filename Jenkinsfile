@@ -22,7 +22,7 @@ pipeline {
         stage('increment version') {
             when {
                 expression {
-                    env.VERSION 'patch'
+                    env.VERSION == 'patch'
                 }
             steps {
                 script {
@@ -31,7 +31,7 @@ pipeline {
             }
             when {
                 expression {
-                    env.VERSION 'minor'
+                    env.VERSION == 'minor'
                 }
             }
             steps {
@@ -41,7 +41,7 @@ pipeline {
             }
             when {
                 expression {
-                    env.VERSION 'major'
+                    env.VERSION == 'major'
                 }
             }
             steps {
