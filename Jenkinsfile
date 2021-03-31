@@ -20,25 +20,33 @@ pipeline {
     stages {
         def packageJSON = readJSON file: 'package.json'
         stage('increment version') {
-            if (env.VERSION == 'patch') {
-                steps {
-                    script {
-                        incrementPatch()
-                    }
+            when {
+                expression {
+                    env.VERSION 'patch'
+                }
+            steps {
+                script {
+                    incrementPatch()
                 }
             }
-            if (env.VERSION == 'minor') {
-                steps {
-                    script {
-                        incrementMinor()
-                    }
+            when {
+                expression {
+                    env.VERSION 'minor'
                 }
             }
-            if (env.VERSION == 'major') {
-                steps {
-                    script {
-                        incrementMajor()
-                    }
+            steps {
+                script {
+                    incrementMinor()
+                }
+            }
+            when {
+                expression {
+                    env.VERSION 'major'
+                }
+            }
+            steps {
+                script {
+                    incrementMajor()
                 }
             }
         }
@@ -49,19 +57,19 @@ pipeline {
                 }
             }
         }
-    // stage('deploy') {
-    //     steps {
-    //         script {
-    //             deploy()
-    //         }
-    //     }
-    // }
-    // stage('commit version update') {
-    //     steps {
-    //         script {
-    //             commitUpdate()
-    //         }
-    //     }
-    // }
+        // stage('deploy') {
+        //     steps {
+        //         script {
+        //             deploy()
+        //         }
+        //     }
+        // }
+        // stage('commit version update') {
+        //     steps {
+        //         script {
+        //             commitUpdate()
+        //         }
+        //     }
+        // }
     }
 }
