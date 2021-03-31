@@ -19,8 +19,12 @@ pipeline {
 
     stages {
         stage('increment version') {
-            def packageJSON = readJSON file: 'package.json'
-            incrementPatch()
+            steps {
+                script {
+                    def packageJSON = readJSON file: 'package.json'
+                    incrementPatch()
+                }
+            }
             // when {
             //     expression {
             //         env.VERSION == 'patch'
@@ -32,36 +36,36 @@ pipeline {
             //         }
             //     }
 
-            //     when {
-            //         expression {
-            //             env.VERSION == 'minor'
-            //         }
-            //     }
-            //     steps {
-            //         script {
-            //             incrementMinor()
-            //         }
-            //     }
-            //     when {
-            //         expression {
-            //             env.VERSION == 'major'
-            //         }
-            //     }
-            //     steps {
-            //         script {
-            //             incrementMajor()
-            //         }
-            //     }
+        //     when {
+        //         expression {
+        //             env.VERSION == 'minor'
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             incrementMinor()
+        //         }
+        //     }
+        //     when {
+        //         expression {
+        //             env.VERSION == 'major'
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             incrementMajor()
+        //         }
+        //     }
         }
 
-        stage('build and push image') {
-            def packageJSON = readJSON file: 'package.json'
-            steps {
-                script {
-                    buildImage "${packageJSON}"
-                }
-            }
-        }
+        // stage('build and push image') {
+        //     def packageJSON = readJSON file: 'package.json'
+        //     steps {
+        //         script {
+        //             buildImage "${packageJSON}"
+        //         }
+        //     }
+        // }
     // stage('deploy') {
     //     steps {
     //         script {
