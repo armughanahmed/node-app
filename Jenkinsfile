@@ -67,7 +67,7 @@ stage('Update GIT') {
                             // git config here for the first time run
                         sh 'git config --global user.email "armughan.ahmed@yahoo.com"'
                         sh 'git config --global user.name "armughanahmed"'
-                        // sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
+                        sh 'git remote set-url origin https://github.com/armughanahmed/node-app.git'
                         // sh "git remote add origin git@github.com:${USER}/node-app.git"
                         sh 'git add .'
                         sh "git commit -m 'ci: version bump'"
