@@ -46,7 +46,8 @@ pipeline {
         stage('commit version update') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    nodejs(nodeJSInstallationName: 'node') {
+            withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         // git config here for the first time run
                         sh 'npm version patch'
                         sh 'git config --global user.email "jenkins@example.com"'
@@ -57,9 +58,11 @@ pipeline {
                         sh "git commit -m 'ci: version bump'"
                         sh 'git push origin HEAD:jenkins-job'
                     }
+     }
                 }
             }
         }
+        
 // stage('Update GIT') {
 //   steps {
 //     script {
