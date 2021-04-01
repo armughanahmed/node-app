@@ -6,7 +6,7 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
          credentialsId: 'github'
         ]
 )
-
+//lol
 pipeline {
     agent any
 
