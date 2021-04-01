@@ -34,15 +34,15 @@ pipeline {
                 }
             }
         }
-        stage('build and push image') {
-            steps {
-                script {
-                    def packageJSON = readJSON file: './package.json'
-                    def packageJSONVersion = packageJSON.version
-                    buildImage "${packageJSONVersion}"
-                }
-            }
-        }
+        // stage('build and push image') {
+        //     steps {
+        //         script {
+        //             def packageJSON = readJSON file: './package.json'
+        //             def packageJSONVersion = packageJSON.version
+        //             buildImage "${packageJSONVersion}"
+        //         }
+        //     }
+        // }
         // stage('commit version update') {
         //     steps {
         //         script {
