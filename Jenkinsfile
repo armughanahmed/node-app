@@ -88,7 +88,7 @@ stage('deploy') {
                     def dockerCmd= "docker run -p 3002:8080 -d ${IMAGE_NAME}"
                    sshagent(['ec2-server-key']) {
                     //    sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
-                       sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerCmd}"
+                       sh "ssh -o StrictHostKeyChecking=no ${EC2_IP} ${dockerCmd}"
                    }
                 }
             }
