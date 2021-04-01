@@ -49,14 +49,14 @@ pipeline {
                     nodejs(nodeJSInstallationName: 'node') {
             withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         // git config here for the first time run
-                        sh 'npm version patch'
-                        sh 'git config --global user.email "jenkins@example.com"'
-                        sh 'git config --global user.name "jenkins"'
-                        sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
+                        sh 'sudo npm version patch'
+                        sh 'sudo git config --global user.email "jenkins@example.com"'
+                        sh 'sudo git config --global user.name "jenkins"'
+                        sh 'sudo git remote set-url origin git@github.com:${USER}/node-app.git'
                         // sh "git remote add origin git@github.com:${USER}/node-app.git"
-                        sh 'git add .'
-                        sh 'git commit -m "version updated"'
-                        sh 'git push origin jenkins-job'
+                        sh 'sudo git add .'
+                        sh 'sudo git commit -m "version updated"'
+                        sh 'sudo git push origin jenkins-job'
                     }
      }
                 }
