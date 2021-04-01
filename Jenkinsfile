@@ -65,7 +65,9 @@ pipeline {
 stage('deploy') {
             steps {
                 script {
-                   deploy()
+                    def packageJSON = readJSON file: './package.json'
+                    def packageJSONVersion = packageJSON.version
+                    deploy "${packageJSONVersion}"
                 }
             }
         }
