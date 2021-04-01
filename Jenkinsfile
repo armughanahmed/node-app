@@ -22,10 +22,7 @@ pipeline {
             steps {
                 script {
                     def packageJSON = readJSON file: './package.json'
-                    nodejs(nodeJSInstallationName: 'node') {
-                    sh 'npm version patch'
-     }
-                    // incrementPatch()
+                    incrementPatch()
                 }
             }
             // when {
