@@ -52,10 +52,12 @@ stage('Update GIT') {
                             // sh 'echo $(git status)'
                         sh 'git config --global user.email "armughan.ahmed@yahoo.com"'
                         sh 'git config --global user.name "armughanahmed"'
+                        sh 'git branch -f jenkins-job'
+                        sh 'git checkout jenkins-job'
                         sh 'git remote set-url origin https://github.com/armughanahmed/node-app.git'
                         sh 'git add .'
                         sh "git commit -a -m 'ci: version bump'"
-                        sh 'git push origin HEAD:jenkins-job'
+                        sh 'git push origin jenkins-job'
         }
     //   }
     }
