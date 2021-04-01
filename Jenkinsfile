@@ -21,7 +21,7 @@ pipeline {
         stage('increment version') {
             steps {
                 script {
-                    def packageJSON = readJSON file: 'package.json'
+                    def packageJSON = readJSON file: './package.json'
                     incrementPatch()
                 }
             }
