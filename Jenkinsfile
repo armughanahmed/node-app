@@ -72,20 +72,22 @@ stage('Update GIT') {
                         // sh 'git branch -f jenkins-job'  
                         // sh 'git checkout jenkins-job'
                         // sh 'git rebase jenkins-job'
-                        // sshagent(['jenkins-git']) {
-                        // sh 'git remote set-url origin git@github.com:armughanahmed/node-app.git'
-                        // sh 'git push origin jenkins-job'
-                        // }
+                        sshagent(['jenkins-git']) {
+                        sh 'git add .'
+                        sh "git commit -a -m 'ci: version bump'"
+                        sh 'git remote set-url origin git@github.com:armughanahmed/node-app.git'
+                        sh 'git push origin jenkins-job'
+                        }
                         // sh 'git remote set-url origin https://github.com/armughanahmed/node-app.git'
                         // sh 'git push origin jenkins-job'
                         // sh 'git push --tag'
                         // sh 'git add .'
                         // sh "git commit -a -m 'ci: version bump'"
                         // sh 'git push origin jenkins-job'
-                        sh "git remote set-url origin git@github.com:armughanahmed/node-app.git"
-                        sh 'git add .'
-                        sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
+                        // sh "git remote set-url origin git@github.com:armughanahmed/node-app.git"
+                        // sh 'git add .'
+                        // sh 'git commit -m "ci: version bump"'
+                        // sh 'git push origin HEAD:jenkins-jobs'
 
         }
     //   }
