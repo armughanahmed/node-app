@@ -66,7 +66,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             sh "git config user.email jenkins@example.com"
             sh "git config user.name jenkins"
-            sh 'cp . ~/checker'
+            sh 'cp -r ./ ~/checker'
             sh 'git add ~/checker'
               sh "git commit -a -m 'ci: version bump'"
                         sh 'git push origin jenkins-job'
