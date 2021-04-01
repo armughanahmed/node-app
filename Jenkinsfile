@@ -11,38 +11,38 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'armughanahmed/node-app'
+        IMAGE_NAME = 'armughanahmed/node-app:3.1.19'
         VERSION = 'patch'
         SERVER_CMDS = 'server-cmds'
         EC2_IP = 'ec2-user@54.177.111.247'
     }
 
     stages {
-        stage('increment version') {
-            steps {
-                script {
-                    def packageJSON = readJSON file: './package.json'
-                    if (env.VERSION=='patch') {
-                        incrementPatch()
-                    }
-                    else if(env.VERSION=='major'){
-                        incrementMinor()
-                    }
-                    else {
-                        incrementMajor()
-                    }
-                }
-            }
-        }
-        stage('build and push image') {
-            steps {
-                script {
-                    def packageJSON = readJSON file: './package.json'
-                    def packageJSONVersion = packageJSON.version
-                    buildImage "${packageJSONVersion}"
-                }
-            }
-        }
+        // stage('increment version') {
+        //     steps {
+        //         script {
+        //             def packageJSON = readJSON file: './package.json'
+        //             if (env.VERSION=='patch') {
+        //                 incrementPatch()
+        //             }
+        //             else if(env.VERSION=='major'){
+        //                 incrementMinor()
+        //             }
+        //             else {
+        //                 incrementMajor()
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('build and push image') {
+        //     steps {
+        //         script {
+        //             def packageJSON = readJSON file: './package.json'
+        //             def packageJSONVersion = packageJSON.version
+        //             buildImage "${packageJSONVersion}"
+        //         }
+        //     }
+        // }
         // stage('commit version update') {
         //     steps {
         //         script {
@@ -78,21 +78,21 @@ pipeline {
 //     }
 //   }
 // }
-// stage('deploy') {
-//             steps {
-//                 script {
-//                    echo 'deploying docker image to EC2...'
+stage('deploy') {
+            steps {
+                script {
+                   echo 'deploying docker image to EC2...'
 
-//                    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
-//                    def ec2Instance = "ec2-user@54.177.111.247"
+                   def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+                   def ec2Instance = "ec2-user@54.177.111.247"
 
-//                    sshagent(['ec2-server-key']) {
-//                        sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
-//                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
-//                    }
-//                 }
-//             }
-//         }
+                   sshagent(['ec2-server-key']) {
+                       sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
+                       sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+                   }
+                }
+            }
+        }
 
     // stage('deploy') {
     //     steps {
