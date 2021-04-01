@@ -55,8 +55,8 @@ pipeline {
                         sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
                         // sh "git remote add origin git@github.com:${USER}/node-app.git"
                         sh 'git add .'
-                        sh "git commit -m 'ci: version bump'"
-                        sh 'git push origin HEAD:jenkins-job'
+                        sh 'git commit -m "version updated"'
+                        sh 'git push origin jenkins-job'
                     }
      }
                 }
