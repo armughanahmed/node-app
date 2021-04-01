@@ -72,7 +72,7 @@ stage('Update GIT') {
                         sh 'git branch -f jenkins-job'  
                         sh 'git checkout jenkins-job'
                         sh 'git rebase jenkins-job'
-                        sshagent(['git-ssh-key']) {
+                        sshagent(['jenkins-git']) {
                         sh 'git remote set-url origin git@github.com:armughanahmed/node-app.git'
                         sh 'git push origin jenkins-job'
                         }
