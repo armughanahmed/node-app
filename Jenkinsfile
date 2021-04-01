@@ -12,7 +12,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'armughanahmed/node-app'
-        VERSION = 'major'
+        VERSION = 'patch'
         SERVER_CMDS = 'server-cmds'
         EC2_IP = 'ec2-user@35.180.251.121'
     }
