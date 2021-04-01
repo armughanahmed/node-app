@@ -34,6 +34,14 @@ pipeline {
                 }
             }
         }
+        stage('build and push image') {
+            def packageJSON = readJSON file: './package.json'
+            steps {
+                script {
+                    buildImage(packageJSON)
+                }
+            }
+        }
         // stage('commit version update') {
         //     steps {
         //         script {
@@ -51,14 +59,6 @@ pipeline {
         //     }
         // }
 
-        // stage('build and push image') {
-        //     def packageJSON = readJSON file: 'package.json'
-        //     steps {
-        //         script {
-        //             buildImage "${packageJSON}"
-        //         }
-        //     }
-        // }
     // stage('deploy') {
     //     steps {
     //         script {
