@@ -18,47 +18,47 @@ pipeline {
     }
 
     stages {
-        // stage('increment version') {
-        //     steps {
-        //         script {
-        //             def packageJSON = readJSON file: './package.json'
-        //             if (env.VERSION=='patch') {
-        //                 incrementPatch()
-        //             }
-        //             else if(env.VERSION=='major'){
-        //                 incrementMinor()
-        //             }
-        //             else {
-        //                 incrementMajor()
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('build and push image') {
-        //     steps {
-        //         script {
-        //             def packageJSON = readJSON file: './package.json'
-        //             def packageJSONVersion = packageJSON.version
-        //             buildImage "${packageJSONVersion}"
-        //         }
-        //     }
-        // }
-        // stage('commit version update') {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        //                 // git config here for the first time run
-        //                 sh 'git config --global user.email "jenkins@example.com"'
-        //                 sh 'git config --global user.name "jenkins"'
-        //                 sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
-        //                 // sh "git remote add origin git@github.com:${USER}/node-app.git"
-        //                 sh 'git add .'
-        //                 sh "git commit -m 'ci: version bump'"
-        //                 sh 'git push origin HEAD:jenkins-job'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('increment version') {
+            steps {
+                script {
+                    def packageJSON = readJSON file: './package.json'
+                    if (env.VERSION=='patch') {
+                        incrementPatch()
+                    }
+                    else if(env.VERSION=='major'){
+                        incrementMinor()
+                    }
+                    else {
+                        incrementMajor()
+                    }
+                }
+            }
+        }
+        stage('build and push image') {
+            steps {
+                script {
+                    def packageJSON = readJSON file: './package.json'
+                    def packageJSONVersion = packageJSON.version
+                    buildImage "${packageJSONVersion}"
+                }
+            }
+        }
+        stage('commit version update') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        // git config here for the first time run
+                        sh 'git config --global user.email "jenkins@example.com"'
+                        sh 'git config --global user.name "jenkins"'
+                        sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
+                        // sh "git remote add origin git@github.com:${USER}/node-app.git"
+                        sh 'git add .'
+                        sh "git commit -m 'ci: version bump'"
+                        sh 'git push origin HEAD:jenkins-job'
+                    }
+                }
+            }
+        }
 // stage('Update GIT') {
 //   steps {
 //     script {
@@ -78,13 +78,13 @@ pipeline {
 //     }
 //   }
 // }
-stage('deploy') {
-            steps {
-                script {
-                   deploy()
-                }
-            }
-        }
+// stage('deploy') {
+//             steps {
+//                 script {
+//                    deploy()
+//                 }
+//             }
+//         }
 
 
         // stage('deploy') {
