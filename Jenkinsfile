@@ -10,19 +10,21 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
 pipeline {
     agent any
 
-    // environment {
-    //     IMAGE_NAME = 'armughanahmed/node-app'
-    //     VERSION = 'patch'
-    //     SERVER_CMDS = 'server-cmds'
-    //     EC2_IP = 'ec2-user@35.180.251.121'
-    // }
+    environment {
+        IMAGE_NAME = 'armughanahmed/node-app'
+        VERSION = 'patch'
+        SERVER_CMDS = 'server-cmds'
+        EC2_IP = 'ec2-user@35.180.251.121'
+    }
 
     stages {
         stage('increment version') {
             steps {
                 script {
                     def packageJSON = readJSON file: './package.json'
-                    incrementPatch()
+                    if (env.VERSION=='patch') {
+                        incrementPatch()
+                    }
                 }
             }
             // when {
