@@ -35,9 +35,9 @@ pipeline {
             }
         }
         stage('build and push image') {
-            def packageJSON = readJSON file: './package.json'
             steps {
                 script {
+                    def packageJSON = readJSON file: './package.json'
                     buildImage(packageJSON)
                 }
             }
