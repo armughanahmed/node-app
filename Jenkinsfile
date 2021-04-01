@@ -50,7 +50,7 @@ pipeline {
             withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         // git config here for the first time run
                         sh 'npm version patch'
-                        sh 'git checkout master'
+                        sh 'git checkout jenkins-job'
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.name "jenkins"'
                         sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
