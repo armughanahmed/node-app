@@ -38,7 +38,8 @@ pipeline {
             steps {
                 script {
                     def packageJSON = readJSON file: './package.json'
-                    buildImage "${packageJSON}"
+                    def packageJSONVersion = packageJSON.version
+                    buildImage "${packageJSONVersion}"
                 }
             }
         }
