@@ -18,22 +18,22 @@ pipeline {
     }
 
     stages {
-        // stage('increment version') {
-        //     steps {
-        //         script {
-        //             def packageJSON = readJSON file: './package.json'
-        //             if (env.VERSION=='patch') {
-        //                 incrementPatch()
-        //             }
-        //             else if(env.VERSION=='major'){
-        //                 incrementMinor()
-        //             }
-        //             else {
-        //                 incrementMajor()
-        //             }
-        //         }
-        //     }
-        // }
+        stage('increment version') {
+            steps {
+                script {
+                    def packageJSON = readJSON file: './package.json'
+                    if (env.VERSION=='patch') {
+                        incrementPatch()
+                    }
+                    else if(env.VERSION=='major'){
+                        incrementMinor()
+                    }
+                    else {
+                        incrementMajor()
+                    }
+                }
+            }
+        }
         stage('build and push image') {
             steps {
                 script {
