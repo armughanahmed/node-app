@@ -65,7 +65,7 @@ stage('Update GIT') {
     //   catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                             // git config here for the first time run
-                            sh 'git status'
+                            sh 'echo git status'
                         // sh 'git config --global user.email "armughan.ahmed@yahoo.com"'
                         // sh 'git config --global user.name "armughanahmed"'
                         // sh 'git remote set-url origin https://github.com/armughanahmed/node-app.git'
