@@ -12,7 +12,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'armughanahmed/node-app'
-        VERSION = 'patch'
+        VERSION = 'major'
         SERVER_CMDS = 'server-cmds'
         EC2_IP = 'ec2-user@35.180.251.121'
     }
@@ -25,39 +25,14 @@ pipeline {
                     if (env.VERSION=='patch') {
                         incrementPatch()
                     }
+                    else if(env.VERSION=='major'){
+                        incrementMinor()
+                    }
+                    else {
+                        incrementMajor()
+                    }
                 }
             }
-            // when {
-            //     expression {
-            //         env.VERSION == 'patch'
-            //     }
-            // }
-            //     steps {
-            //         script {
-            //             incrementPatch()
-            //         }
-            //     }
-
-        //     when {
-        //         expression {
-        //             env.VERSION == 'minor'
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             incrementMinor()
-        //         }
-        //     }
-        //     when {
-        //         expression {
-        //             env.VERSION == 'major'
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             incrementMajor()
-        //         }
-        //     }
         }
         // stage('commit version update') {
         //     steps {
