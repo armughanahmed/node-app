@@ -11,7 +11,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'armughanahmed/node-app:3.1.19'
+        IMAGE_NAME = 'armughanahmed/node-app'
         VERSION = 'patch'
         SERVER_CMDS = 'server-cmds'
         EC2_IP = 'ec2-user@54.177.111.247'
