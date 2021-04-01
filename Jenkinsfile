@@ -6,7 +6,6 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
          credentialsId: 'github'
         ]
 )
-//lol
 pipeline {
     agent any
 
@@ -18,48 +17,28 @@ pipeline {
     }
 
     stages {
-        // stage('increment version') {
-        //     steps {
-        //         script {
-        //             def packageJSON = readJSON file: './package.json'
-        //             if (env.VERSION=='patch') {
-        //                 incrementPatch()
-        //             }
-        //             else if(env.VERSION=='major'){
-        //                 incrementMinor()
-        //             }
-        //             else {
-        //                 incrementMajor()
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('build and push image') {
-        //     steps {
-        //         script {
-        //             def packageJSON = readJSON file: './package.json'
-        //             def packageJSONVersion = packageJSON.version
-        //             buildImage "${packageJSONVersion}"
-        //         }
-        //     }
-        // }
-        stage('commit version update') {
+        stage('increment version') {
             steps {
                 script {
-                    nodejs(nodeJSInstallationName: 'node') {
-            withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        // git config here for the first time run
-                        sh 'npm version patch'
-                        sh 'git checkout jenkins-job'
-                        sh 'git config --global user.email "jenkins@example.com"'
-                        sh 'git config --global user.name "jenkins"'
-                        sh 'git remote set-url origin git@github.com:${USER}/node-app.git'
-                        // sh "git remote add origin git@github.com:${USER}/node-app.git"
-                        sh 'git add .'
-                        sh 'git commit -am "version updated"'
-                        sh 'git push origin jenkins-job'
+                    def packageJSON = readJSON file: './package.json'
+                    if (env.VERSION=='patch') {
+                        incrementPatch()
                     }
-     }
+                    else if(env.VERSION=='major'){
+                        incrementMinor()
+                    }
+                    else {
+                        incrementMajor()
+                    }
+                }
+            }
+        }
+        stage('build and push image') {
+            steps {
+                script {
+                    def packageJSON = readJSON file: './package.json'
+                    def packageJSONVersion = packageJSON.version
+                    buildImage "${packageJSONVersion}"
                 }
             }
         }
@@ -83,44 +62,12 @@ pipeline {
 //     }
 //   }
 // }
-// stage('deploy') {
-//             steps {
-//                 script {
-//                    deploy()
-//                 }
-//             }
-//         }
-
-
-        // stage('deploy') {
-        //     steps {
-        //         script {
-        //            echo 'deploying docker image to EC2...'
-
-        //         //    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
-        //         //    def ec2Instance = "ec2-user@54.177.111.247"
-        //             def dockerCmd= "docker run -p 3002:8080 -d ${IMAGE_NAME}"
-        //            sshagent(['ec2-server-key']) {
-        //             //    sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
-        //                sh "ssh -o StrictHostKeyChecking=no ${EC2_IP} ${dockerCmd}"
-        //            }
-        //         }
-        //     }
-        // }
-
-    // stage('deploy') {
-    //     steps {
-    //         script {
-    //             deploy()
-    //         }
-    //     }
-    // }
-    // stage('commit version update') {
-    //     steps {
-    //         script {
-    //             commitUpdate()
-    //         }
-    //     }
-    // }
+stage('deploy') {
+            steps {
+                script {
+                   deploy()
+                }
+            }
+        }
     }
 }
