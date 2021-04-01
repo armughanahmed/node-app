@@ -83,12 +83,12 @@ stage('deploy') {
                 script {
                    echo 'deploying docker image to EC2...'
 
-                   def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
-                   def ec2Instance = "ec2-user@54.177.111.247"
-
+                //    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+                //    def ec2Instance = "ec2-user@54.177.111.247"
+                    def dockerCmd= "docker run -p 3002:8080 -d ${IMAGE_NAME}"
                    sshagent(['ec2-server-key']) {
-                       sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
-                       sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+                    //    sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
+                       sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerCmd}"
                    }
                 }
             }
