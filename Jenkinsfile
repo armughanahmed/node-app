@@ -62,19 +62,16 @@ pipeline {
         stage('Update GIT') {
   steps {
     script {
-      catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+      
         withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-            def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
             sh "git config user.email jenkins@example.com"
             sh "git config user.name jenkins"
-            sshagent(['jenkins-git']) {
-                        sh "git add ."
-            sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
-            sh "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/node-app.git"
-                        }
+            sh 'cp . ~/checker'
+            sh 'git add ~/checker'
+              sh "git commit -a -m 'ci: version bump'"
+                        sh 'git push origin jenkins-job'
         }
       }
-    }
   }
 }
 // stage('Update GIT') {
