@@ -1,6 +1,6 @@
 {
   "name": "node-app",
-  "version": "5.0.29",
+  "version": "5.0.30",
   "description": "",
   "main": "index.js",
   "scripts": {
