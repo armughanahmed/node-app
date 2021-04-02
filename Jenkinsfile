@@ -106,7 +106,7 @@ stage('deploy') {
                 script {
                     // def packageJSON = readJSON file: './package.json'
                     // def packageJSONVersion = packageJSON.version
-                    deploy "${commitId}"
+                    deploy "${commit_id}"
                 }
             }
         }
