@@ -6,6 +6,7 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
          credentialsId: 'github'
         ]
 )
+def commit_id
 pipeline {
     agent any
     environment {
@@ -13,7 +14,6 @@ pipeline {
         VERSION = 'patch'
         SERVER_CMDS = 'server-cmds'
         EC2_IP = 'ec2-user@54.177.111.247'
-        commit_id=''
     }
     stages {
         stage('Preparation') {
@@ -61,7 +61,7 @@ pipeline {
                 script {
                     // def packageJSON = readJSON file: './package.json'
                     // def packageJSONVersion = packageJSON.version
-                    buildImage "${env.commit_id}"
+                    buildImage "${commit_id}"
                 }
             }
         }
@@ -104,7 +104,7 @@ stage('deploy') {
                 script {
                     // def packageJSON = readJSON file: './package.json'
                     // def packageJSONVersion = packageJSON.version
-                    sh "echo ${env.commit_id}"
+                    sh "echo ${commit_id}"
                     // deploy "${commitId}"
                 }
             }
