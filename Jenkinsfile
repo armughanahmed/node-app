@@ -8,31 +8,37 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
 )
 pipeline {
     agent any
-
     environment {
         IMAGE_NAME = 'armughanahmed/node-app'
         VERSION = 'patch'
         SERVER_CMDS = 'server-cmds'
         EC2_IP = 'ec2-user@54.177.111.247'
+        commit_id=''
     }
-
     stages {
-        stage('increment version') {
+        stage('Preparation') {
             steps {
                 script {
-                    def packageJSON = readJSON file: './package.json'
-                    if (env.VERSION=='patch') {
-                        incrementPatch()
-                    }
-                    else if(env.VERSION=='major'){
-                        incrementMinor()
-                    }
-                    else {
-                        incrementMajor()
-                    }
+                    checkOut();
                 }
             }
         }
+        // stage('increment version') {
+        //     steps {
+        //         script {
+        //             def packageJSON = readJSON file: './package.json'
+        //             if (env.VERSION=='patch') {
+        //                 incrementPatch()
+        //             }
+        //             else if(env.VERSION=='major'){
+        //                 incrementMinor()
+        //             }
+        //             else {
+        //                 incrementMajor()
+        //             }
+        //         }
+        //     }
+        // }
         // stage('commit version update') {
         //     steps {
         //         script {
@@ -50,30 +56,15 @@ pipeline {
         //     }
         // }
 
-        // stage('build and push image') {
-        //     steps {
-        //         script {
-        //             def packageJSON = readJSON file: './package.json'
-        //             def packageJSONVersion = packageJSON.version
-        //             buildImage "${packageJSONVersion}"
-        //         }
-        //     }
-        // }
-        stage('Update GIT') {
-  steps {
-    script {
-      
-        withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-            sh "git config user.email jenkins@example.com"
-            sh "git config user.name jenkins"
-            sh 'cp -r ./ ~/checker'
-            sh 'git add ~/checker'
-              sh "git commit -a -m 'ci: version bump'"
-                        sh 'git push origin jenkins-job'
+        stage('build and push image') {
+            steps {
+                script {
+                    // def packageJSON = readJSON file: './package.json'
+                    // def packageJSONVersion = packageJSON.version
+                    buildImage "${env.commit_id}"
+                }
+            }
         }
-      }
-  }
-}
 // stage('Update GIT') {
 //   steps {
 //     script {
@@ -108,14 +99,15 @@ pipeline {
 //     }
 //   }
 // }
-// stage('deploy') {
-//             steps {
-//                 script {
-//                     def packageJSON = readJSON file: './package.json'
-//                     def packageJSONVersion = packageJSON.version
-//                     deploy "${packageJSONVersion}"
-//                 }
-//             }
-//         }
+stage('deploy') {
+            steps {
+                script {
+                    // def packageJSON = readJSON file: './package.json'
+                    // def packageJSONVersion = packageJSON.version
+                    sh "echo ${env.commit_id}"
+                    // deploy "${commitId}"
+                }
+            }
+        }
     }
 }
