@@ -13,7 +13,7 @@ pipeline {
         IMAGE_NAME = 'armughanahmed/node-app'
         VERSION = 'patch'
         SERVER_CMDS = 'server-cmds'
-        EC2_IP = 'ec2-user@54.153.73.131'
+        EC2_IP = 'ec2-user@54.153.102.242'
     }
     stages {
         stage('Preparation') {
